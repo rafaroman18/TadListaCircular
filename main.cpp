@@ -1,8 +1,9 @@
 #include <iostream>
 #include "tadlistacircular.h"
 
-int main() {
-    ListaCir<int>*ListaCULO;
-    ListaCULO->insertar(1,0);
+int main()
+{
+    ListaCir<int> L;
+    //L.insertar(3,);
     return 0;
 }

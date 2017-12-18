@@ -68,8 +68,8 @@ void ListaCir<T>::copiar(const ListaCir<T> &l)
         q->sig=new nodo(r->elto);
         q=q->sig;
     }
-    q->sig=L->sig;                  //Añade al siguiente puntero, la posicion inicial
-    L->sig=q;                       //Coloca la cabcera L en el ultimo elemento
+    q->sig=L;                  //Añade al siguiente puntero, la posicion inicial
+    L=q;                       //Coloca la cabcera L en el ultimo elemento
 }
 
 //Precondicion:Recibe una lista circular de la forma L=(a1,a2,...,an,a1)
@@ -95,7 +95,7 @@ void ListaCir<T>::insertar(const T& x, ListaCir<T>::posicion p)
     if(!p->sig)
     {
         p->sig=new nodo(x,p->sig);
-        L->sig=p->sig;                          //Añadimos esta linea para que si
+        L=p->sig;                          //Añadimos esta linea para que si
     }                                           //nos encontramos el caso de una lista
     else                                        //vacia o que quiera colocar en la ultima posicion
         p->sig=new nodo(x,p->sig);              //la funcion recoloque el puntero L hacia el ultimo
@@ -108,10 +108,10 @@ void ListaCir<T>::insertar(const T& x, ListaCir<T>::posicion p)
 template <typename T>
 inline void ListaCir<T>::eliminar(ListaCir<T>::posicion p)
 {
-    assert(p->sig);
+    assert(p->sig);           //Comprobamos que p no es fin
     nodo* q=p->sig;
     p->sig=q->sig;
-    L->sig=p;                                   //L apunta ahora al ultimo
+    L=p;                                   //L apunta ahora al ultimo
     delete q;
 }
 
@@ -120,43 +120,74 @@ inline void ListaCir<T>::eliminar(ListaCir<T>::posicion p)
 template<typename T>
 inline const T& ListaCir<T>::elemento(ListaCir<T>::posicion p) const
 {
-    assert(p->sig);
+    assert(p->sig);           //Comprobamos que p no es fin
     return p->sig->elto;
 }
 
 //Postcondicion:Devuelve la posicion p que ocupa el elemento x en la lista, si este no se
 //encuentra en ella, devuelve POS_NULA
 template <typename T>
-posicion buscar(const T& x)const
+typename ListaCir<T>::posicion
+ListaCir<T>::buscar(const T& x) const
 {
-
+    nodo* q=L;
+    bool encontrado=false;
+    while(q->sig!=L && !encontrado)
+    {
+        if(q->sig->elto==x)
+            encontrado=true;
+        else q=q->sig;
+    }
+    return q;
 }
-
 
 //Precondiciones:L=(a1,a2,...an,a1)
 //Postcondicion:Devuelve una posicion indeterminada de la lista, si esta vacia,
 //devuelve POS_NULA
-posicion inipos() const
+template <typename T>
+typename ListaCir<T>::posicion
+ListaCir<T>::inipos() const
 {
 
+    return this->L->sig;        //NO DEMASIADO SEGURO
 }
 
 
 //Precondicion:L=(a1,a2,...an,a1) y 1<=p<=n
 //Postcondicion:Devuelve la siguiente posicion a la actual p
-posicion siguiente(posicion p)const
+template <typename T>
+typename ListaCir<T>::posicion
+ListaCir<T>::siguiente(ListaCir<T>::posicion p)const
 {
-
+    assert(p->sig);
+    return p->sig;
 }
 
 
 //Precondicion: L=(a1,a2,...,an,a1) y 1<=p<=n
 //Postcondicion: Devuelve la anterior posicion de p
-posicion anterior (posicion p) const
+template <typename T>
+typename ListaCir<T>::posicion
+ListaCir<T>::anterior (ListaCir<T>::posicion p) const
 {
-
+    nodo*q;
+    assert(p!=L->sig);          //p no es la primera posicion
+    for(q=L->sig;q->sig!=p;q=q->sig);
+    return q;
 }
 
-
-
+template <typename T>
+inline ListaCir<T>::~ListaCir()
+{
+    nodo*p;
+    nodo*w;
+    p=L->sig;
+    while(p)
+    {
+     w=p->sig;
+        delete p;
+        p=w;
+    }
+    L=0;
+}
 #endif //TADCIRCULAR_TADLISTACIRCULAR_H
