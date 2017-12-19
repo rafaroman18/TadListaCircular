@@ -4,6 +4,8 @@
 int main()
 {
     ListaCir<int> L;
-    //L.insertar(3,);
+    std::cout<<L.inipos();
+    L.insertar(3,L.inipos());
+    std::cout<<L.elemento(L.inipos());
     return 0;
 }

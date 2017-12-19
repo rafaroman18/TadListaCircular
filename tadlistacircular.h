@@ -94,8 +94,12 @@ void ListaCir<T>::insertar(const T& x, ListaCir<T>::posicion p)
 {
     if(!p->sig)
     {
+        nodo*aux;
+        aux=p;
         p->sig=new nodo(x,p->sig);
         L=p->sig;                          //Añadimos esta linea para que si
+        p=p->sig;
+        p->sig=aux;
     }                                           //nos encontramos el caso de una lista
     else                                        //vacia o que quiera colocar en la ultima posicion
         p->sig=new nodo(x,p->sig);              //la funcion recoloque el puntero L hacia el ultimo
@@ -148,8 +152,7 @@ template <typename T>
 typename ListaCir<T>::posicion
 ListaCir<T>::inipos() const
 {
-
-    return this->L->sig;        //NO DEMASIADO SEGURO
+    return this->L;        //NO DEMASIADO SEGURO
 }
 
 
