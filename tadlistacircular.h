@@ -47,7 +47,7 @@ private:
 
 //Postcondicion: Crea  y devuelve una lista circular vacia
 template <typename T>
-inline ListaCir<T>::ListaCir():L(new nodo(T())){};
+inline ListaCir<T>::ListaCir():L(0){};
 
 //Precondicion: L=(a1,a2,...,an,a1)
 //Postcondicion:Devuelve la copia de un lista
