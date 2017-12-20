@@ -63,7 +63,7 @@ template<typename T>
 void ListaCir<T>::copiar(const ListaCir<T> &l)
 {
     L = new nodo(T());
-    nodo*q=L;
+    posicion q=L;
     for(nodo*r=l.L->sig;r;r=r->sig)
     {
         q->sig=new nodo(r->elto);
@@ -153,11 +153,13 @@ template <typename T>
 typename ListaCir<T>::posicion
 ListaCir<T>::inipos() const
 {
-    if(!this->L->sig)
-    {
-        return POS_NULA; //Si el nodo tiene un unico elemento, creamos uno nuevo y le introducimos el valor de este mismo, es decir, lo enlazamos a él mismo
-    }
-    return this->L->sig;        //NO DEMASIADO SEGURO
+    posicion NODO;
+
+    if(!this->L->sig) NODO=NULL; //Si el nodo tiene un unico elemento, creamos uno nuevo y le introducimos el valor de este mismo, es decir, lo enlazamos a él mismo
+
+    else NODO=this->L;
+
+    return NODO;
 }
 
 
@@ -187,12 +189,12 @@ ListaCir<T>::anterior (ListaCir<T>::posicion p) const
 template <typename T>
 inline ListaCir<T>::~ListaCir()
 {
-    nodo*p=this->L;
-    nodo*w;
-    while(p)
+    posicion w;
+    while(L)
     {
-     w=p->sig; delete p; p=w;
+     w=L->sig;
+        delete L;
+        L=w;
     }
-    L=0;
 }
 #endif //TADCIRCULAR_TADLISTACIRCULAR_H

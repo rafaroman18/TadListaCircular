@@ -3,10 +3,12 @@
 
 int main()
 {
-    ListaCir<int> L;
-    L.insertar(3,L.inipos());
-    L.insertar(2,L.inipos());
-    L.insertar(1,L.inipos());
+    ListaCir<int> L;int i;
+    for(i=0;i<10;i++)
+    {
+    L.insertar(i,L.inipos());
+    }
     std::cout << L.elemento(L.inipos());
+    L.~ListaCir();
     return 0;
 }
