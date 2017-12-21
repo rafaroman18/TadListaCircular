@@ -144,15 +144,16 @@ template <typename T>
 typename ListaCir<T>::posicion
 ListaCir<T>::buscar(const T& x) const
 {
-    nodo* q=L;
+    nodo* q=L->sig;
     bool encontrado=false;
-    while(q->sig!=L && !encontrado)
+    while(q!=L && !encontrado)
     {
         if(q->sig->elto==x)
             encontrado=true;
         else q=q->sig;
     }
-    return q;
+    if(!encontrado) q->sig=POS_NULA;
+    return q->sig;
 }
 
 //Precondiciones:L=(a1,a2,...an,a1)

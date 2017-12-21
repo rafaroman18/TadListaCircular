@@ -16,5 +16,7 @@ int main()
     {
         std::cout<<L.elemento(L.inipos());
     }
+    std::cout<<std::endl;
+    std::cout<<L.elemento(L.buscar(9));
     return 0;
 }
