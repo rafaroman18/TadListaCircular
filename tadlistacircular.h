@@ -113,12 +113,21 @@ void ListaCir<T>::insertar(const T& x, ListaCir<T>::posicion p)
 template <typename T>
 inline void ListaCir<T>::eliminar(ListaCir<T>::posicion p)
 {
-    assert(p->sig);           //Comprobamos que p no es fin
-    nodo* q=p->sig;
-    p->sig=q->sig;
-    L=p;                                   //L apunta ahora al ultimo
-    delete q;
-}
+    assert(p->sig);
+    posicion q=p->sig;
+    if(L==p)                        //Comprobamos que p no es fin
+    {
+        while(q->sig!=L)
+        {
+            q=q->sig;
+        }
+        p=q;
+        p->sig=L->sig;
+        L=p;
+    }
+    else {
+        p = q;
+    }}
 
 //Precondicion: L=(a1,a2,...an,a1, y 1<=p<=n
 //Postcondicion: Devuelve el elemento ubicado en la posicion p, es decir, ap
@@ -155,7 +164,7 @@ ListaCir<T>::inipos() const
 {
     posicion NODO;
 
-    if(!this->L->sig) NODO=NULL; //Si el nodo tiene un unico elemento, creamos uno nuevo y le introducimos el valor de este mismo, es decir, lo enlazamos a él mismo
+    if(!this->L->sig) NODO=POS_NULA; //Si el nodo tiene un unico elemento, creamos uno nuevo y le introducimos el valor de este mismo, es decir, lo enlazamos a él mismo
 
     else NODO=this->L;
 
