@@ -134,7 +134,7 @@ inline void ListaCir<T>::eliminar(ListaCir<T>::posicion p)
 template<typename T>
 inline const T& ListaCir<T>::elemento(ListaCir<T>::posicion p) const
 {
-    assert(p->sig);           //Comprobamos que p no es fin
+    //assert(p->sig);           //Comprobamos que p no es fin
     return p->elto;
 }
 
@@ -152,7 +152,7 @@ ListaCir<T>::buscar(const T& x) const
             encontrado=true;
         else q=q->sig;
     }
-    if(!encontrado) q->sig=POS_NULA;
+    if(!encontrado) q->sig->elto=POS_NULA;
     return q->sig;
 }
 
@@ -190,8 +190,8 @@ template <typename T>
 typename ListaCir<T>::posicion
 ListaCir<T>::anterior (ListaCir<T>::posicion p) const
 {
-    nodo*q;
-    assert(p!=L->sig);          //p no es la primera posicion
+    assert(p->sig);
+    nodo*q; //p no es la primera posicion
     for(q=L->sig;q->sig!=p;q=q->sig);
     return q;
 }
