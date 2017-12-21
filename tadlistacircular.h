@@ -126,7 +126,14 @@ inline void ListaCir<T>::eliminar(ListaCir<T>::posicion p)
         L=p;
     }
     else {
-        p = q;
+        while(q->sig!=p)
+        {
+            q=q->sig;
+        }
+        p=q;
+        q=q->sig;
+        p->sig=q->sig;
+
     }}
 
 //Precondicion: L=(a1,a2,...an,a1, y 1<=p<=n
@@ -152,7 +159,7 @@ ListaCir<T>::buscar(const T& x) const
             encontrado=true;
         else q=q->sig;
     }
-    if(!encontrado) q->sig->elto=POS_NULA;
+    if(!encontrado){ q->sig->elto=POS_NULA;}
     return q->sig;
 }
 
