@@ -47,7 +47,7 @@ private:
 
 //Postcondicion: Crea  y devuelve una lista circular vacia
 template <typename T>
-inline ListaCir<T>::ListaCir():L(0){};
+inline ListaCir<T>::ListaCir():L(new nodo (T())){};
 
 //Precondicion: L=(a1,a2,...,an,a1)
 //Postcondicion:Devuelve la copia de un lista
@@ -189,12 +189,16 @@ ListaCir<T>::anterior (ListaCir<T>::posicion p) const
 template <typename T>
 inline ListaCir<T>::~ListaCir()
 {
-    posicion w;
-    while(L)
+    if(!L)  //Si la Lista esta vacia solo elimina la cabecera
     {
-     w=L->sig;
-        delete L;
-        L=w;
+        nodo* q;
+        while (L->sig != L)//Controlamos que la cabezera apunte a ella misma
+        {
+            q = L->sig;
+            L->sig = q->sig;
+            delete q;
+        }
     }
+    delete L;//eliminacion la cabecera
 }
 #endif //TADCIRCULAR_TADLISTACIRCULAR_H
